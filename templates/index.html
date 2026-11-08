@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduPredict | Prediksi Kelulusan</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            padding: 35px 15px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb, #0f172a);
+            color: white;
+            padding: 35px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            line-height: 1.7;
+            color: #dbeafe;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 22px;
+        }
+
+        h2 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .field {
+            margin-bottom: 21px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: white;
+            font-size: 15px;
+        }
+
+        select:focus {
+            outline: 2px solid #93c5fd;
+            border-color: #2563eb;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Bagian hasil prediksi */
+
+        .result {
+            margin-top: 28px;
+            padding: 24px;
+            border-radius: 14px;
+            border-left: 6px solid;
+        }
+
+        .result.lulus {
+            background: #ecfdf5;
+            border-color: #16a34a;
+        }
+
+        .result.tidak-lulus {
+            background: #fff1f2;
+            border-color: #e11d48;
+        }
+
+        .result h3 {
+            margin-bottom: 12px;
+        }
+
+        .lulus h3 {
+            color: #15803d;
+        }
+
+        .tidak-lulus h3 {
+            color: #be123c;
+        }
+
+        .status {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .lulus .status {
+            color: #15803d;
+        }
+
+        .tidak-lulus .status {
+            color: #be123c;
+        }
+
+        .result-description {
+            line-height: 1.7;
+            color: #334155;
+        }
+
+        .section {
+            margin-top: 23px;
+        }
+
+        .section h3 {
+            margin-bottom: 12px;
+        }
+
+        .reason-list,
+        .suggestion-list {
+            padding-left: 22px;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .reason-list li,
+        .suggestion-list li {
+            margin-bottom: 9px;
+        }
+
+        .motivation {
+            margin-top: 23px;
+            padding: 18px;
+            background: white;
+            border-radius: 11px;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .motivation strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 16px;
+        }
+
+        .notice {
+            margin-top: 20px;
+            padding: 14px;
+            background: #f8fafc;
+            border-radius: 9px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff1f2;
+            color: #be123c;
+            border-radius: 9px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.8;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px 12px;
+            }
+
+            .header,
+            .card {
+                padding: 22px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>EduPredict</h1>
+        <p>
+            Sistem Prediksi Kelulusan Mahasiswa Menggunakan
+            Algoritma Decision Tree.
+        </p>
+    </div>
+
+    <!-- FORM PREDIKSI -->
+    <div class="card">
+
+        <h2>Prediksi Kelulusan Mahasiswa</h2>
+
+        <p class="description">
+            Masukkan informasi akademik mahasiswa untuk mengetahui
+            hasil prediksi kelulusan beserta penjelasan dan saran
+            yang dapat membantu meningkatkan prestasi akademik.
+        </p>
+
+        <form method="POST">
+
+            <div class="field">
+                <label>Jam Belajar Mingguan</label>
+                <select name="17" required>
+                    <option value="">Pilih jam belajar</option>
+                    <option value="1">Tidak belajar</option>
+                    <option value="2">Kurang dari 5 jam</option>
+                    <option value="3">6–10 jam</option>
+                    <option value="4">11–20 jam</option>
+                    <option value="5">Lebih dari 20 jam</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Kehadiran Kelas</label>
+                <select name="22" required>
+                    <option value="">Pilih kehadiran</option>
+                    <option value="1">Selalu hadir</option>
+                    <option value="2">Kadang-kadang hadir</option>
+                    <option value="3">Tidak pernah hadir</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Persiapan Ujian Pertama</label>
+                <select name="23" required>
+                    <option value="">Pilih cara persiapan</option>
+                    <option value="1">Belajar sendiri</option>
+                    <option value="2">Belajar bersama teman</option>
+                    <option value="3">Tidak berlaku</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Kebiasaan Mencatat</label>
+                <select name="25" required>
+                    <option value="">Pilih kebiasaan mencatat</option>
+                    <option value="1">Tidak pernah mencatat</option>
+                    <option value="2">Kadang-kadang mencatat</option>
+                    <option value="3">Selalu mencatat</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>IPS Semester Sebelumnya</label>
+                <select name="29" required>
+                    <option value="">Pilih rentang IPS</option>
+                    <option value="1">Di bawah 2,00</option>
+                    <option value="2">2,00–2,49</option>
+                    <option value="3">2,50–2,99</option>
+                    <option value="4">3,00–3,49</option>
+                    <option value="5">3,50–4,00</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Model Decision Tree</label>
+                <select name="model">
+                    <option value="pruned"
+                        {% if model_dipilih == 'pruned' %}selected{% endif %}>
+                        Decision Tree dengan Pruning
+                    </option>
+
+                    <option value="awal"
+                        {% if model_dipilih == 'awal' %}selected{% endif %}>
+                        Decision Tree tanpa Pruning
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit">
+                Prediksi Kelulusan
+            </button>
+
+        </form>
+
+        <!-- HASIL PREDIKSI -->
+        {% if hasil and hasil in ['Lulus', 'Tidak Lulus'] %}
+
+        <div class="result {{ 'lulus' if hasil == 'Lulus' else 'tidak-lulus' }}">
+
+            <h3>Hasil Prediksi Kelulusan</h3>
+
+            <div class="status">
+                {% if hasil == 'Lulus' %}
+                    Selamat! Diprediksi Lulus
+                {% else %}
+                    Diprediksi Tidak Lulus
+                {% endif %}
+            </div>
+
+            <p class="result-description">
+                {% if hasil == 'Lulus' %}
+                    Berdasarkan pola akademik yang dipelajari model,
+                    data yang kamu masukkan mengarah pada prediksi
+                    Lulus. Pertahankan kebiasaan baikmu dan terus
+                    tingkatkan prestasi akademik.
+                {% else %}
+                    Berdasarkan pola akademik yang dipelajari model,
+                    data yang kamu masukkan mengarah pada prediksi
+                    Tidak Lulus. Ada beberapa hal yang bisa kamu
+                    evaluasi dan tingkatkan agar hasil belajar
+                    ke depannya menjadi lebih baik.
+                {% endif %}
+            </p>
+
+            <!-- ALASAN -->
+            <div class="section">
+                <h3>Kenapa Hasilnya Seperti Ini?</h3>
+
+                <p class="result-description">
+                    Model mempertimbangkan beberapa informasi
+                    akademik berikut dalam jalur keputusan:
+                </p>
+
+                <ul class="reason-list">
+                    {% for item in alasan %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- SARAN -->
+            <div class="section">
+                <h3>
+                    {% if hasil == 'Lulus' %}
+                        Hal yang Perlu Dipertahankan
+                    {% else %}
+                        Hal yang Bisa Ditingkatkan
+                    {% endif %}
+                </h3>
+
+                <ul class="suggestion-list">
+                    {% for item in saran %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- MOTIVASI -->
+            <div class="motivation">
+
+                {% if hasil == 'Lulus' %}
+
+                    <strong>Terus Pertahankan Prestasimu!</strong>
+
+                    Kamu sudah berada pada pola akademik yang
+                    mengarah pada hasil positif menurut model.
+                    Jangan cepat puas. Tetap konsisten belajar,
+                    jaga kehadiran, dan persiapkan ujian dengan baik.
+
+                {% else %}
+
+                    <strong>Jangan Menyerah, Masih Ada Kesempatan!</strong>
+
+                    Hasil prediksi ini bukan penentu masa depanmu.
+                    Jadikan hasil ini sebagai bahan evaluasi.
+                    Perbaiki kebiasaan belajar sedikit demi sedikit,
+                    tetap semangat mengikuti perkuliahan, dan
+                    jangan takut untuk terus mencoba.
+
+                {% endif %}
+
+            </div>
+
+            <div class="notice">
+                <strong>Catatan:</strong>
+                Hasil ini merupakan prediksi berdasarkan pola
+                data yang dipelajari oleh algoritma Decision Tree,
+                bukan keputusan kelulusan resmi dari pihak kampus.
+                Penjelasan alasan menunjukkan jalur keputusan
+                model, bukan bukti sebab-akibat.
+            </div>
+
+        </div>
+
+        {% elif hasil %}
+
+            <div class="error">
+                {{ hasil }}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="footer">
+        EduPredict | Sistem Prediksi Kelulusan Mahasiswa
+        <br>
+        Menggunakan Algoritma Decision Tree
+    </div>
+
+</div>
+
+</body>
+</html>
